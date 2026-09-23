@@ -1,21 +1,8 @@
-<HTA:APPLICATION 
-    ID="oBSOD"
-    APPLICATIONNAME="WindowsBSOD"
-    BORDER="none"
-    BORDERSTYLE="normal"
-    CAPTION="no"
-    ICON=""
-    MAXIMIZEBUTTON="no"
-    MINIMIZEBUTTON="no"
-    SHOWINTASKBAR="no"
-    SINGLEINSTANCE="yes"
-    SYSMENU="no"
-    VERSION="1.0"
-    WINDOWSTATE="maximize"
-/>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Windows System Error</title>
+    <meta charset="UTF-8">
+    <title>Windows Error</title>
     <style>
         * {
             box-sizing: border-box;
@@ -52,7 +39,6 @@
             font-weight: 300;
             margin-bottom: 12px;
         }
-        /* Fake Loading Bar */
         .progress-bar-container {
             width: 350px;
             height: 10px;
@@ -94,30 +80,8 @@
             margin-top: 6px;
         }
     </style>
-    <script language="javascript">
-        window.resizeTo(screen.width, screen.height);
-        window.moveTo(0, 0);
-
-        let count = 0;
-        let timer = setInterval(() => {
-            if (count < 100) {
-                count += Math.floor(Math.random() * 8) + 1;
-                if (count > 100) count = 100;
-                
-                document.getElementById('counter').innerText = count;
-                document.getElementById('bar-fill').style.width = count + '%';
-            } else {
-                clearInterval(timer);
-            }
-        }, 400);
-
-        // Press Escape key or double click to close
-        document.onkeydown = function(e) {
-            if (e.keyCode == 27) { window.close(); }
-        };
-    </script>
 </head>
-<body ondblclick="window.close();">
+<body onclick="goFullScreen()">
     <div class="smiley">: )</div>
     <div class="main-text">HELLO! Your PC ran into a totally harmless friendly greeting and needs to say hi.</div>
     
@@ -135,8 +99,34 @@
             <span>If you call a support person, give them this info:</span>
             <span>Stop code: HELLO_WORLD_EXCEPTION</span>
             <span>What failed: FRIENDLY_GREETING.SYS</span>
-            <span style="margin-top: 15px; opacity: 0.6;">(Press ESC or Double-Click to exit)</span>
+            <span style="margin-top: 15px; opacity: 0.6;">(Click anywhere to trigger full screen, press ESC to exit)</span>
         </div>
     </div>
+
+    <script>
+        function goFullScreen() {
+            let elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        let count = 0;
+        let timer = setInterval(() => {
+            if (count < 100) {
+                count += Math.floor(Math.random() * 8) + 1;
+                if (count > 100) count = 100;
+                
+                document.getElementById('counter').innerText = count;
+                document.getElementById('bar-fill').style.width = count + '%';
+            } else {
+                clearInterval(timer);
+            }
+        }, 400);
+    </script>
 </body>
 </html>
